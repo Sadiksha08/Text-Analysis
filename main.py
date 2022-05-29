@@ -3,6 +3,7 @@ import nltk
 nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('wordnet')
+nltk.download('omw-1.4')
 import string
 import nltk.corpus
 from nltk.util import ngrams
@@ -37,7 +38,7 @@ import datetime as dt
 #2. Youtube Transcript Extractor
 from youtube_transcript_api import YouTubeTranscriptApi
 import streamlit.components.v1 as components
-
+import en_core_web_sm
 
 # Warnings ignore 
 warnings.filterwarnings(action='ignore')
@@ -773,8 +774,8 @@ if option == "Text Annotation":
     if uploaded_file is not None:
         text_input = uploaded_file.getvalue()
     
-    nlp = spacy.load("en_core_web_sm")
-    ner = spacy.load("en_core_web_sm")
+    nlp = en_core_web_sm.load()
+    ner = en_core_web_sm.load()
     doc = ner(str(text_input))
     
     options = st.sidebar.radio("Please choose one option",('NER', 'Tokenization'))
