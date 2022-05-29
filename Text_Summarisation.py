@@ -1,5 +1,5 @@
 # Import necessary libraries
-from gensim.summarization.summarizer import summarize
+# from gensim.summarization.summarizer import summarize
 from nltk.tokenize import sent_tokenize
 import math
 from sumy.parsers.plaintext import PlaintextParser
@@ -9,12 +9,12 @@ from sumy.summarizers.lex_rank import LexRankSummarizer
 
 
 # Function to generate text summary using GenSim module 
-def text_sum_gensim(text, ratio=0.2):
+# def text_sum_gensim(text, ratio=0.2):
 
 	# Summarize text using gensim
-	gen_summary = summarize(text, ratio=ratio)
-	print(gen_summary)
-	return gen_summary
+	# gen_summary = summarize(text, ratio=ratio)
+	# print(gen_summary)
+	# return gen_summary
 
 
 # Function to generate text summary using LexRank 
