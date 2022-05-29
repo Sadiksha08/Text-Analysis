@@ -150,7 +150,7 @@ elif option == 'Multilingual Text to Speech Translator':
     
         
     if options == "Youtube URL":
-        st.title("Streamlit YouTube Transcript Extractor")
+        st.write("YouTube Transcript Extractor")
         URL = st.sidebar.text_input("Paste YouTube URL:","https://www.youtube.com/watch?v=i2jwZcWicSY")
         
         if "=" in URL:
@@ -197,6 +197,19 @@ elif option == 'Multilingual Text to Speech Translator':
 
     option = st.selectbox('Select Language',langlist)
     
+    # speech_langs = {"af": "Afrikaans","ar": "Arabic","bg": "Bulgarian","bn": "Bengali",
+    #             "bs": "Bosnian","ca": "Catalan","cs": "Czech","cy": "Welsh","da": "Danish",
+    #             "de": "German","el": "Greek","en": "English","eo": "Esperanto","es": "Spanish",
+    #             "et": "Estonian","fi": "Finnish","fr": "French","gu": "Gujarati","hi": "Hindi",
+    #             "hr": "Croatian","hu": "Hungarian","hy": "Armenian","id": "Indonesian",
+    #             "is": "Icelandic","it": "Italian","ja": "Japanese","jw": "Javanese",
+    #             "km": "Khmer","kn": "Kannada","ko": "Korean","la": "Latin","lv": "Latvian",
+    #             "mk": "Macedonian","ml": "Malayalam","mr": "Marathi","my": "Myanmar (Burmese)",
+    #             "ne": "Nepali","nl": "Dutch","no": "Norwegian","pl": "Polish","pt": "Portuguese",
+    #             "ro": "Romanian","ru": "Russian","si": "Sinhala","sk": "Slovak","sq": "Albanian",
+    #             "sr": "Serbian","su": "Sundanese","sv": "Swedish","sw": "Swahili","ta": "Tamil",
+    #             "te": "Telugu","th": "Thai","tl": "Filipino","tr": "Turkish","uk": "Ukrainian",
+    #             "ur": "Urdu","vi": "Vietnamese","zh-CN": "Chinese"}  
     
     speech_langs = {
         "af": "Afrikaans",
@@ -413,7 +426,9 @@ if option == 'Text Summarization':
         
         # remove all bad words ...
         # original found at http://en.wiktionary.org/wiki/Category:English_swear_words
-        lstBadWords = ["arse","ass","asshole","bastard","bitch","bloody","bollocks","child-fucker","cunt","damn","fuck","goddamn","godsdamn","hell","motherfucker","shit","shitass","whore"]
+        lstBadWords = ["arse","ass","asshole","bastard","bitch","bloody","bollocks","child-fucker",
+                       "cunt","damn","fuck","goddamn","godsdamn","hell","motherfucker","shit",
+                       "shitass","whore"]
         lstAllWords = [t for t in lstAllWords if t not in lstBadWords]
         
         # remove application specific words
@@ -471,7 +486,7 @@ if option == 'Text Summarization':
         
         if genre == 'View File Content':
         #if st.button('View Content'):
-            st.markdown("**Here you go, your file content**")
+            st.markdown("**File content**")
             st.markdown(strAllTexts)
 
         
@@ -497,10 +512,10 @@ if option == 'Text Summarization':
             
             if option == 'Unigram - 1-Ngram':
                 #with col11:
-                st.title("Top keywords")
+                st.subheader("Top keywords")
                 st.dataframe(dfunigramscolle)
-                st.title("Unigram")
-                st.title("Word Freq Count - Top 10")
+                st.subheader("Unigram")
+                st.subheader("Word Freq Count - Top 10")
                 fig = plt.figure(figsize = (10, 6))
                 ax = sns.barplot(x='Word', y='Freq', data = dfunigramscolle)
                 #ax = plt.bar(dfunigramscolle['Word'], dfunigramscolle['Freq'])
@@ -511,10 +526,10 @@ if option == 'Text Summarization':
 
             if option == 'Biagram - 2-Ngram':
                 #with col11:
-                st.title("Top keywords")
+                st.subheader("Top keywords")
                 st.dataframe(dfbiagramcolle)
-                st.title("Bigram")
-                st.title("Word Freq Count - Top 10")
+                st.subheader("Bigram")
+                st.subheader("Word Freq Count - Top 10")
                 fig = plt.figure(figsize = (10, 6))
                 ax = sns.barplot(x='Word', y='Freq', data = dfbiagramcolle)
                 #ax = plt.bar(dfbiagramcolle['Word'], dfbiagramcolle['Freq'])
@@ -525,10 +540,10 @@ if option == 'Text Summarization':
                 
             if option == 'Trigram - 3-Ngram':
                 #with col11:
-                st.title("Top keywords")
+                st.subheader("Top keywords")
                 st.dataframe(dftrigramcolle)
-                st.title("Trigram")
-                st.title("Word Freq Count - Top 10")
+                st.subheader("Trigram")
+                st.subheader("Word Freq Count - Top 10")
                 fig = plt.figure(figsize = (10, 6))
                 ax = sns.barplot(x='Word', y='Freq', data = dfbiagramcolle)
                 #ax = plt.bar(dftrigramcolle['Word'], dftrigramcolle['Freq'])
@@ -595,7 +610,7 @@ if option == 'Text Summarization':
           
                 
             #with col12:
-            st.title("Word Cloud for top words")
+            st.subheader("Word Cloud for top words")
             #plot word cloud
             # word cloud options
             # https://www.datacamp.com/community/tutorials/wordcloud-python
@@ -773,5 +788,4 @@ if option == "Text Annotation":
 
 
 #*****************************************************************************************
-
 
