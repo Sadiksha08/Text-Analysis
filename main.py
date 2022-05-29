@@ -636,7 +636,7 @@ if option == 'Text Summarization':
             
         if genre == 'Summary' :
             
-            model = st.sidebar.selectbox("Model Select", ["Latent Semantic Analysis", "GenSim", "TextRank", "LexRank"])
+            model = st.sidebar.selectbox("Model Select", ["Latent Semantic Analysis","TextRank", "LexRank"]) # "GenSim", 
             #ratio = st.sidebar.slider("Select summary ratio", min_value=0.0, max_value=1.0, value=0.3, step=0.1)
             
             if model == "Latent Semantic Analysis":
@@ -730,13 +730,13 @@ if option == 'Text Summarization':
                     st.write(str(i).strip())
                     
             text = strAllTexts       
-            if model == "GenSim":
-               	sentence_count = len(sent_tokenize(text))
-               	st.write("Number of sentences:", sentence_count)
-               	ratio = st.sidebar.slider("Select summary ratio", min_value=0.0, max_value=1.0, value=0.3, step=0.1)
-                out = ts.text_sum_gensim(text, ratio=ratio)
-                st.write("**Summary Output:**", out)
-                st.write("Number of output sentences:", len(sent_tokenize(out)))
+            #if model == "GenSim":
+               	#sentence_count = len(sent_tokenize(text))
+               	#st.write("Number of sentences:", sentence_count)
+               	#ratio = st.sidebar.slider("Select summary ratio", min_value=0.0, max_value=1.0, value=0.3, step=0.1)
+                #out = ts.text_sum_gensim(text, ratio=ratio)
+                #st.write("**Summary Output:**", out)
+                #st.write("Number of output sentences:", len(sent_tokenize(out)))
              			# st.write(out)
             if model == "TextRank":
                 sentence_count = len(sent_tokenize(text))
