@@ -68,7 +68,7 @@ if option == 'Overview':
     # Title of the application 
     st.title('Text Analysis')
     
-    image = Image.open('./images/textanalysis.png')
+    image = Image.open('./images/TextAnalysis.png')
     st.image(image, caption='**Text Analysis - Language Translation, Information Extraction, Text Summarization, Text Annotation**')
 
     
