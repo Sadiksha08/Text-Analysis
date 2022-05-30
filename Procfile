@@ -1,1 +1,1 @@
-web: gunicorn -w 4 -k uvicorn.workers.UvicornWorker pythoncode:main
+web: sh setup.sh && streamlit run main.py
