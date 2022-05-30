@@ -197,7 +197,8 @@ elif option == 'Multilingual Text to Speech Translator':
 
 
     option = st.selectbox('Select Language',langlist)
-    
+    st.sidebar.write("1. Languages are pulled from language.xlsx. If translation is available it will be displayed in Translated Text window.")
+    st.sidebar.write("2. In addition if text-to-Speech is supported it will display audio file to play and download." )
     # speech_langs = {"af": "Afrikaans","ar": "Arabic","bg": "Bulgarian","bn": "Bengali",
     #             "bs": "Bosnian","ca": "Catalan","cs": "Czech","cy": "Welsh","da": "Danish",
     #             "de": "German","el": "Greek","en": "English","eo": "Esperanto","es": "Spanish",
