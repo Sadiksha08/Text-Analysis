@@ -22,7 +22,7 @@ from PIL import  Image
 #import pytesseract
 import spacy
 import spacy_streamlit
-import en_core_web_sm
+#import en_core_web_sm
 from collections import Counter
 from nltk.tokenize import sent_tokenize
 import docx2txt
@@ -779,8 +779,8 @@ if option == "Text Annotation":
     if uploaded_file is not None:
         text_input = uploaded_file.getvalue()
     
-    nlp = spacy.load("en_core_web_sm")
-    ner = spacy.load("en_core_web_sm")
+    nlp = spacy.load('en_core_web_sm')
+    ner = spacy.load('en_core_web_sm')
     doc = ner(str(text_input))
     
     options = st.sidebar.radio("Please choose one option",('NER', 'Tokenization'))
