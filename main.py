@@ -22,6 +22,7 @@ from PIL import  Image
 #import pytesseract
 import spacy
 import spacy_streamlit
+import en_core_web_sm
 from collections import Counter
 from nltk.tokenize import sent_tokenize
 import docx2txt
