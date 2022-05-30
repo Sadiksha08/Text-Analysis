@@ -12,8 +12,8 @@ import re
 import streamlit as st
 #from gensim import utils
 import streamlit as st
-import gensim
-import gensim.downloader as api
+#import gensim
+#import gensim.downloader as api
 import numpy as np
 import pandas as pd
 import seaborn as sns
