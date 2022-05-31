@@ -22,6 +22,8 @@ from io import StringIO
 from PIL import  Image
 import pytesseract
 import spacy
+import spacy.cli
+spacy.cli.download("en_core_web_sm")
 import spacy_streamlit
 #import en_core_web_sm
 from collections import Counter
