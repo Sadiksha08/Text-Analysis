@@ -188,7 +188,7 @@ elif option == 'Multilingual Text to Speech Translator':
         
         image_file = st.file_uploader("Upload Images", type=["png","jpg","jpeg"])
    
-         if image_file is not None:
+        if image_file is not None:
               # To View Uploaded Image
               st.image(load_image(image_file),width=250)
               pytesseract.pytesseract.tesseract_cmd = r'\app\.apt\usr\bin\tesseract'
