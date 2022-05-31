@@ -19,7 +19,7 @@ import warnings
 import tempfile
 from io import StringIO
 from PIL import  Image
-#import pytesseract
+import pytesseract
 import spacy
 import spacy_streamlit
 #import en_core_web_sm
@@ -123,7 +123,7 @@ elif option == 'Multilingual Text to Speech Translator':
     
         
     inputtext =""
-    options = st.sidebar.radio("Please choose one option",('Type or Write', 'Youtube URL')) #'Speech to Text' #, 'Image'
+    options = st.sidebar.radio("Please choose one option",('Type or Write', 'Youtube URL', 'Image')) #'Speech to Text' #, 'Image'
     
     if options == 'Type or Write':
         inputtext = st.text_area("INPUT",height=200)
@@ -188,15 +188,15 @@ elif option == 'Multilingual Text to Speech Translator':
         
         image_file = st.file_uploader("Upload Images", type=["png","jpg","jpeg"])
    
-        # if image_file is not None:
-        #      # To View Uploaded Image
-        #      st.image(load_image(image_file),width=250)
-        #      pytesseract.pytesseract.tesseract_cmd = r'.\.apt\usr\bin\tesseract'
-        #      #pytesseract.pytesseract.tesseract_cmd = r'C:\Users\Sandesh Singh\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
-        #      #options = "-l {} --psm {}".format(args["lang"], args["psm"])
-        #      inputtext = pytesseract.image_to_string(Image.open(image_file),lang='eng+hin+mar+pan+guj+ind+kor+urd+tam+telfra+ara+asm+jpn+kan') # eng+hin+mar+pan+guj+ind+kor+urd+tam+telfra+ara+asm+jpn+kan
-        #      if st.button("Display Extracted Text"):
-        #          st.text(inputtext[:-1])
+         if image_file is not None:
+              # To View Uploaded Image
+              st.image(load_image(image_file),width=250)
+              pytesseract.pytesseract.tesseract_cmd = r'\app\.apt\usr\bin\tesseract'
+              #pytesseract.pytesseract.tesseract_cmd = r'C:\Users\Sandesh Singh\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
+              options = "-l {} --psm {}".format(args["lang"], args["psm"])
+              inputtext = pytesseract.image_to_string(Image.open(image_file),lang='eng+hin+mar+pan+guj+ind+kor+urd+tam+telfra+ara+asm+jpn+kan') # eng+hin+mar+pan+guj+ind+kor+urd+tam+telfra+ara+asm+jpn+kan
+              if st.button("Display Extracted Text"):
+                  st.text(inputtext[:-1])
 
 
     option = st.selectbox('Select Language',langlist)
