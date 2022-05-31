@@ -781,8 +781,8 @@ if option == "Text Annotation":
     if uploaded_file is not None:
         text_input = uploaded_file.getvalue()
     
-    nlp = spacy.load('en_core_web_sm')
-    ner = spacy.load('en_core_web_sm')
+    #nlp = spacy.load('en_core_web_sm')
+    ner = spacy.load(r'./.heroku/python/lib/python3.10/site-packages/en_core_web_sm/en_core_web_sm-2.2.0')
     doc = ner(str(text_input))
     
     options = st.sidebar.radio("Please choose one option",('NER', 'Tokenization'))
