@@ -4,6 +4,7 @@ nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('wordnet')
 nltk.download('omw-1.4')
+import argparse
 import string
 import nltk.corpus
 from nltk.util import ngrams
@@ -52,7 +53,8 @@ import Text_Summarisation as ts
 from annotated_text import annotated_text
 # https://pypi.org/project/spacy/
 
-
+ap = argparse.ArgumentParser()
+args = ap.parse_args()
 
 # Sidebar options
 option = st.sidebar.selectbox('Navigation', 
