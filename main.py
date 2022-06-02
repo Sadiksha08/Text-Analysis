@@ -55,7 +55,7 @@ import Text_Summarisation as ts
 from annotated_text import annotated_text
 # https://pypi.org/project/spacy/
 
-args = argparse.ArgumentParser()
+#ap = argparse.ArgumentParser()
 #args = ap.parse_args()
 #ap.add_argument("-l", "--lang", required=True,help="language that Tesseract will use when OCR'ing")
 #ap.add_argument("-t", "--to", type=str, default="en",help="language that we'll be translating to")
