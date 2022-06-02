@@ -63,7 +63,7 @@ ap.add_argument("-t", "--to", type=str, default="en",
 	help="language that we'll be translating to")
 ap.add_argument("-p", "--psm", type=int, default=13,
 	help="Tesseract PSM mode")
-args = vars(ap.parse_args())
+args = ap.parse_args()
 
 # Sidebar options
 option = st.sidebar.selectbox('Navigation', 
