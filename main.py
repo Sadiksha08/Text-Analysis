@@ -195,10 +195,11 @@ elif option == 'Multilingual Text to Speech Translator':
         if image_file is not None:
               # To View Uploaded Image
               st.image(load_image(image_file),width=250)
-              pytesseract.pytesseract.tesseract_cmd = r'/app/.apt/usr/bin/tesseract'
+	      tessdata_dir_config = r'--tessdata-dir "/app/.apt/usr/share/tesseract-ocr/tessdata"'
+              #pytesseract.pytesseract.tesseract_cmd = r'/app/.apt/usr/bin/tesseract'
               #pytesseract.pytesseract.tesseract_cmd = r'C:\Users\Sandesh Singh\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
               #options = "-l {} --psm {}".format(args["lang"], args["psm"])
-              inputtext = pytesseract.image_to_string(Image.open(image_file),lang='eng+hin+mar+pan+guj+ind+kor+urd+tam+telfra+ara+asm+jpn+kan') # eng+hin+mar+pan+guj+ind+kor+urd+tam+telfra+ara+asm+jpn+kan
+              inputtext = pytesseract.image_to_string(Image.open(image_file),lang='eng+hin+mar+pan+guj+ind+kor+urd+tam+telfra+ara+asm+jpn+kan', config=tessdata_dir_config) # eng+hin+mar+pan+guj+ind+kor+urd+tam+telfra+ara+asm+jpn+kan
               if st.button("Display Extracted Text"):
                   st.text(inputtext[:-1])
 
