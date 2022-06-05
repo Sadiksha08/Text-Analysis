@@ -55,6 +55,10 @@ import Text_Summarisation as ts
 from annotated_text import annotated_text
 # https://pypi.org/project/spacy/
 
+import sys
+sys.argv=['']
+del sys
+
 # Sidebar options
 option = st.sidebar.selectbox('Navigation', 
 ["Overview",
