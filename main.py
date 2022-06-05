@@ -55,9 +55,9 @@ import Text_Summarisation as ts
 from annotated_text import annotated_text
 # https://pypi.org/project/spacy/
 
-import sys
-sys.argv=['']
-del sys
+# import sys
+# sys.argv=['']
+# del sys
 
 # Sidebar options
 option = st.sidebar.selectbox('Navigation', 
@@ -197,7 +197,7 @@ elif option == 'Multilingual Text to Speech Translator':
         ap.add_argument("-l", "--lang", required=True,help="language that Tesseract will use when OCR'ing")
         ap.add_argument("-t", "--to", type=str, default="en",help="language that we'll be translating to")
         ap.add_argument("-p", "--psm", type=int, default=13,help="Tesseract PSM mode")
-        args = vars(ap.parse_args())
+        args = ap.parse_known_args()[0]
    
         if image_file is not None:
               # To View Uploaded Image
