@@ -21,8 +21,8 @@ import tempfile
 from io import StringIO
 from PIL import  Image
 import pytesseract
-from pytesseract import*
-import cv2
+#from pytesseract import*
+#import cv2
 import spacy
 import spacy.cli
 spacy.cli.download("en_core_web_sm")
@@ -130,7 +130,7 @@ elif option == 'Multilingual Text to Speech Translator':
     
         
     inputtext =""
-    options = st.sidebar.radio("Please choose one option",('Type or Write', 'Youtube URL', 'Image')) #'Speech to Text' #, 'Image'
+    options = st.sidebar.radio("Please choose one option",('Type or Write', 'Youtube URL')) #'Speech to Text' #, 'Image'
     
     if options == 'Type or Write':
         inputtext = st.text_area("INPUT",height=200)
@@ -187,32 +187,32 @@ elif option == 'Multilingual Text to Speech Translator':
                 st.error("Transcript Not available for this video")
         
         
-    if options == "Image":
+    # if options == "Image":
         
-        def load_image(image_file):
-            img = Image.open(image_file)
-            return img    
+    #     def load_image(image_file):
+    #         img = Image.open(image_file)
+    #         return img    
         
-        image_file = st.file_uploader("Upload Images", type=["png","jpg","jpeg"])
-        ap = argparse.ArgumentParser(description='Fooo')
-        args = ap.parse_args()
-        ap.add_argument("-l", "--lang", required=True,help="language that Tesseract will use when OCR'ing")
-        ap.add_argument("-t", "--to", type=str, default="en",help="language that we'll be translating to")
-        ap.add_argument("-p", "--psm", type=int, default=13,help="Tesseract PSM mode")
-        args = vars(ap.parse_args())
+    #     image_file = st.file_uploader("Upload Images", type=["png","jpg","jpeg"])
+    #     ap = argparse.ArgumentParser(description='Fooo')
+    #     args = ap.parse_args()
+    #     ap.add_argument("-l", "--lang", required=True,help="language that Tesseract will use when OCR'ing")
+    #     ap.add_argument("-t", "--to", type=str, default="en",help="language that we'll be translating to")
+    #     ap.add_argument("-p", "--psm", type=int, default=13,help="Tesseract PSM mode")
+    #     args = vars(ap.parse_args())
    
-        if image_file is not None:
-              # To View Uploaded Image
-              st.image(load_image(image_file),width=250)
-              image = cv2.imread(args["image"])
-              rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)	
-              #tessdata_dir_config = r'--tessdata-dir "/app/.apt/usr/share/tesseract-ocr/tessdata"'
-              pytesseract.pytesseract.tesseract_cmd = r'/app/.apt/usr/bin/tesseract'
-              #pytesseract.pytesseract.tesseract_cmd = r'C:\Users\Sandesh Singh\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
-              options = "-l {} --psm {}".format(args["lang"], args["psm"]) # Image.open(image_file)
-              inputtext = pytesseract.image_to_string(rgb,lang='eng+hin+mar+pan+guj+ind+kor+urd+tam+telfra+ara+asm+jpn+kan', config=options) # eng+hin+mar+pan+guj+ind+kor+urd+tam+telfra+ara+asm+jpn+kan
-              if st.button("Display Extracted Text"):
-                  st.text(inputtext[:-1])
+    #     if image_file is not None:
+    #           # To View Uploaded Image
+    #           st.image(load_image(image_file),width=250)
+    #           image = cv2.imread(args["image"])
+    #           rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)	
+    #           #tessdata_dir_config = r'--tessdata-dir "/app/.apt/usr/share/tesseract-ocr/tessdata"'
+    #           pytesseract.pytesseract.tesseract_cmd = r'/app/.apt/usr/bin/tesseract'
+    #           #pytesseract.pytesseract.tesseract_cmd = r'C:\Users\Sandesh Singh\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
+    #           options = "-l {} --psm {}".format(args["lang"], args["psm"]) # Image.open(image_file)
+    #           inputtext = pytesseract.image_to_string(rgb,lang='eng+hin+mar+pan+guj+ind+kor+urd+tam+telfra+ara+asm+jpn+kan', config=options) # eng+hin+mar+pan+guj+ind+kor+urd+tam+telfra+ara+asm+jpn+kan
+    #           if st.button("Display Extracted Text"):
+    #               st.text(inputtext[:-1]) 
 
     option = st.selectbox('Select Language',langlist)
     st.sidebar.write("1. Languages are pulled from language.xlsx. If translation is available it will be displayed in Translated Text window.")
