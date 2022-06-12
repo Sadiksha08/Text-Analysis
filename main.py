@@ -21,6 +21,8 @@ import tempfile
 from io import StringIO
 from PIL import  Image
 import pytesseract
+from pytesseract import*
+import cv2
 import spacy
 import spacy.cli
 spacy.cli.download("en_core_web_sm")
@@ -202,11 +204,13 @@ elif option == 'Multilingual Text to Speech Translator':
         if image_file is not None:
               # To View Uploaded Image
               st.image(load_image(image_file),width=250)
+	      image = cv2.imread(args["image"])
+	      rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)	
               #tessdata_dir_config = r'--tessdata-dir "/app/.apt/usr/share/tesseract-ocr/tessdata"'
               pytesseract.pytesseract.tesseract_cmd = r'/app/.apt/usr/bin/tesseract'
               #pytesseract.pytesseract.tesseract_cmd = r'C:\Users\Sandesh Singh\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
-              options = "-l {} --psm {}".format(args["lang"], args["psm"])
-              inputtext = pytesseract.image_to_string(Image.open(image_file),lang='eng+hin+mar+pan+guj+ind+kor+urd+tam+telfra+ara+asm+jpn+kan', config=options) # eng+hin+mar+pan+guj+ind+kor+urd+tam+telfra+ara+asm+jpn+kan
+              options = "-l {} --psm {}".format(args["lang"], args["psm"]) # Image.open(image_file)
+              inputtext = pytesseract.image_to_string(rgb,lang='eng+hin+mar+pan+guj+ind+kor+urd+tam+telfra+ara+asm+jpn+kan', config=options) # eng+hin+mar+pan+guj+ind+kor+urd+tam+telfra+ara+asm+jpn+kan
               if st.button("Display Extracted Text"):
                   st.text(inputtext[:-1])
 
