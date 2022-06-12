@@ -204,8 +204,8 @@ elif option == 'Multilingual Text to Speech Translator':
         if image_file is not None:
               # To View Uploaded Image
               st.image(load_image(image_file),width=250)
-	      image = cv2.imread(args["image"])
-	      rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)	
+              image = cv2.imread(args["image"])
+              rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)	
               #tessdata_dir_config = r'--tessdata-dir "/app/.apt/usr/share/tesseract-ocr/tessdata"'
               pytesseract.pytesseract.tesseract_cmd = r'/app/.apt/usr/bin/tesseract'
               #pytesseract.pytesseract.tesseract_cmd = r'C:\Users\Sandesh Singh\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
