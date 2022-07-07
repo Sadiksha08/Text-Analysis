@@ -9,7 +9,7 @@ import string
 import nltk.corpus
 from nltk.util import ngrams
 import joblib
-# import gensim
+#import gensim
 import re
 import streamlit as st
 import numpy as np
@@ -36,7 +36,7 @@ import requests
 from bs4 import BeautifulSoup
 
 #1. Translator Imports
-# from mtranslate import translate
+from mtranslate import translate
 import os
 from gtts import gTTS
 import base64
@@ -133,7 +133,7 @@ elif option == 'Multilingual Text to Speech Translator':
     
         
     inputtext =""
-    options = st.sidebar.radio("Please choose one option",('Type or Write', 'Youtube URL')) #'Speech to Text' #, 'Image'
+    options = st.sidebar.radio("Please choose one option",('Type or Write', 'Youtube URL')) #'Image'
     
     if options == 'Type or Write':
         inputtext = st.text_area("INPUT",height=200)
@@ -318,9 +318,9 @@ elif option == 'Multilingual Text to Speech Translator':
         # I/O
         if len(inputtext) > 0 :
             try:
-                translator=Translator()
-                output = translator.translate(inputtext, dest=lang_array[option]).text
-                #output = translate(inputtext,lang_array[option])
+                #translator=Translator()
+                #output = translator.translate(inputtext, dest=lang_array[option]).text
+                output = translate(inputtext,lang_array[option])
                 with c1:
                     st.text_area("TRANSLATED TEXT",output,height=200)
                 # if speech support is available will render autio file
