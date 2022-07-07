@@ -700,7 +700,7 @@ if option == 'Text Summarization':
             
             if model == "Latent Semantic Analysis":
             
-                nLineSmry = st.sidebar.number_input("Please enter number of line for summary you would like to see", min_value=1)
+                nLineSmry = st.number_input("Please enter number of line for summary you would like to see", min_value=1)
                                 
                 
                 # word weight = word-count / max(word-count)
