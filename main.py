@@ -887,10 +887,11 @@ if option == "Text Annotation":
     if options == "NER":
         # Display 
         spacy_streamlit.visualize_ner(doc, labels=ner.get_pipe('ner').labels)
+        st.image("./images/NER_2.png")
         
     if options == "Tokenization":
         spacy_streamlit.visualize_tokens(doc, attrs=['text', 'pos_'])   
-
+        st.image("./images/POS_tag.png")
 
 #*****************************************************************************************
 
