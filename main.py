@@ -36,11 +36,14 @@ import requests
 from bs4 import BeautifulSoup
 
 #1. Translator Imports
-from mtranslate import translate
+# from mtranslate import translate
 import os
 from gtts import gTTS
 import base64
 import datetime as dt
+import googletrans
+from googletrans import Translator
+from langdetect import detect
 
 #2. Youtube Transcript Extractor
 from youtube_transcript_api import YouTubeTranscriptApi
@@ -90,7 +93,7 @@ if option == 'Overview':
     st.write("For spreading new ideas, information and knowledge, the language translation is necessary. To effectively communicate between different cultures, language translation is important. The objective of this Python project is to translate a piece of text into another language.")
     st.write("How to use this tool")
     st.write("I. Choose Multilingual Text to Speech Translator option from the drop down")
-    st.write("II. choose option to type/upload files or paste the youtube URL link or upload image file")
+    st.write("II. choose option to type/upload files or paste the youtube URL link") # upload image file
     st.write("III. Select the language from the language list")
     st.write("IV. Click on Translate button")
     st.write("V. Once file is processed it will display the translated text in the translated text window and also display the audio file you can listen or download it.")
@@ -99,14 +102,14 @@ if option == 'Overview':
     st.write("Text summarization refers to the technique of shortening long pieces of text. The intention is to create a coherent and fluent summary having only the main points outlined in the document. Automatic text summarization methods are greatly needed to address the ever-growing amount of text data available online to both better help discover relevant information and to consume relevant information faster. Machine learning models are usually trained to understand documents and distill the useful information before outputting the required summarized texts.")
     st.write("How to use this tool")
     st.write("I. Choose Text Summarization option from the drop down")
-    st.write("II. choose option to type or upload files or web scrapping")
+    st.write("II. choose option to type or upload files or web scrapping or paste the youtube URL link")
     st.write("III. Once file is processed, We can view the content, EDA/VDA and Select the techinques from the list using which it will display the summary of text.")
 
     st.subheader("3. Text Annotation")   
     st.write("Text annotation in machine learning (ML) is the process of assigning labels to a digital file or document and its content. This is an NLP method where different types of sentence structures are highlighted by various criteria.")
     st.write("How to use this tool")
     st.write("I. Choose Text Annotation option from the drop down")
-    st.write("II. choose option to Type/Enter the sentence or upload files")
+    st.write("II. choose option to Type/Enter the sentence or upload files or paste the youtube URL link")
     st.write("III. choose option NER to see the named entities of Text data OR Choose Option of Tokenization to see the Parts of Speech of text.")
     
 #*****************************************************************************************
@@ -214,24 +217,29 @@ elif option == 'Multilingual Text to Speech Translator':
     #           if st.button("Display Extracted Text"):
     #               st.text(inputtext[:-1]) 
 
+    if st.button("Detect Input Language And Play Audio File"):                  
+            lang_detect = detect(inputtext) 
+            st.write("Language of Input Text is :", lang_detect)
+            # Passing the text and language to the engine, 
+            # here we have marked slow=False. Which tells 
+            # the module that the converted audio should 
+            # have a high speed
+            input_audio = gTTS(text=inputtext, lang=lang_detect, slow=False)
+            # Saving the converted audio in a mp3 file named
+            # welcome 
+            input_audio.save("input_audio.mp3")
+            # Playing the converted file
+            #os.system("mpg321 input_audio.mp3")
+            input_audio_read = open('input_audio.mp3', 'rb')
+            input_audio_bytes = input_audio_read.read()
+            bin_str = base64.b64encode(input_audio_bytes).decode()
+            st.audio(input_audio_bytes, format='audio/mp3')
+	
+	
     option = st.selectbox('Select Language',langlist)
     st.sidebar.write("1. Languages are pulled from language.xlsx. If translation is available it will be displayed in Translated Text window.")
     st.sidebar.write("2. In addition if text-to-Speech is supported it will display audio file to play and download." )
-    
-    # speech_langs = {"af": "Afrikaans","ar": "Arabic","bg": "Bulgarian","bn": "Bengali",
-    #             "bs": "Bosnian","ca": "Catalan","cs": "Czech","cy": "Welsh","da": "Danish",
-    #             "de": "German","el": "Greek","en": "English","eo": "Esperanto","es": "Spanish",
-    #             "et": "Estonian","fi": "Finnish","fr": "French","gu": "Gujarati","hi": "Hindi",
-    #             "hr": "Croatian","hu": "Hungarian","hy": "Armenian","id": "Indonesian",
-    #             "is": "Icelandic","it": "Italian","ja": "Japanese","jw": "Javanese",
-    #             "km": "Khmer","kn": "Kannada","ko": "Korean","la": "Latin","lv": "Latvian",
-    #             "mk": "Macedonian","ml": "Malayalam","mr": "Marathi","my": "Myanmar (Burmese)",
-    #             "ne": "Nepali","nl": "Dutch","no": "Norwegian","pl": "Polish","pt": "Portuguese",
-    #             "ro": "Romanian","ru": "Russian","si": "Sinhala","sk": "Slovak","sq": "Albanian",
-    #             "sr": "Serbian","su": "Sundanese","sv": "Swedish","sw": "Swahili","ta": "Tamil",
-    #             "te": "Telugu","th": "Thai","tl": "Filipino","tr": "Turkish","uk": "Ukrainian",
-    #             "ur": "Urdu","vi": "Vietnamese","zh-CN": "Chinese"}  
-    
+        
     speech_langs = {
         "af": "Afrikaans",
         "ar": "Arabic",
@@ -294,6 +302,7 @@ elif option == 'Multilingual Text to Speech Translator':
         "zh-CN": "Chinese"
     }
     
+	
     # function to decode audio file for download
     def get_binary_file_downloader_html(bin_file, file_label='File'):
         with open(bin_file, 'rb') as f:
@@ -309,7 +318,9 @@ elif option == 'Multilingual Text to Speech Translator':
         # I/O
         if len(inputtext) > 0 :
             try:
-                output = translate(inputtext,lang_array[option])
+                translator=Translator()
+                output = translator.translate(inputtext, dest=lang_array[option]).text
+                #output = translate(inputtext,lang_array[option])
                 with c1:
                     st.text_area("TRANSLATED TEXT",output,height=200)
                 # if speech support is available will render autio file
@@ -346,7 +357,7 @@ if option == 'Text Summarization':
     
     
     strAllTexts =""
-    options = st.sidebar.radio("Please choose one option",('Upload File', 'Web Scrapping','Type or Write'))
+    options = st.sidebar.radio("Please choose one option",('Upload File', 'Web Scrapping','Type or Write', 'Youtube URL'))
     if options == 'Upload File':
         docx_file = st.sidebar.file_uploader("Choose a file", type=["pdf","docx","txt"])
         if docx_file is not None:
@@ -387,6 +398,33 @@ if option == 'Text Summarization':
             except:
                 st.write("Please enter valid URL")
 
+    if options == "Youtube URL":
+        st.write("YouTube Transcript Extractor")
+        URL = st.sidebar.text_input("Paste YouTube URL:","https://www.youtube.com/watch?v=Y8Tko2YC5hA")    #https://www.youtube.com/watch?v=ukzFI9rgwfU
+        
+        if "=" in URL:
+            ID = URL.split("=")[1]
+            embedurl = "https://www.youtube.com/embed/" + ID
+            if "&" in embedurl: embedurl = embedurl.split("&")[0]
+        try:
+            components.iframe(embedurl, width=500, height=250)
+        except:
+            st.error("YouTube URL Required")
+        
+        try:
+            transcript = YouTubeTranscriptApi.get_transcript(ID)
+            l = [t['text'] for t in transcript]
+            description = " ".join(l)
+        except:
+            pass
+        
+        try :
+            if len(description) > 0:
+                strAllTexts = st.text_area("Extracted Transcript",description,height=200)
+                st.download_button(label="Download Transcript",data=description,file_name=str(ID) + ".txt",mime="text/plain")
+        except Exception as e:
+                st.error("Transcript Not available for this video")     
+		
     if len(strAllTexts):
         genre = st.sidebar.radio("Please choose one option",('View File Content', 'EDA / VDA', 'Summary'))
     
@@ -657,12 +695,12 @@ if option == 'Text Summarization':
             
         if genre == 'Summary' :
             
-            model = st.sidebar.selectbox("Model Select", ["Latent Semantic Analysis", "GenSim", "TextRank", "LexRank"])
+            model = st.sidebar.selectbox("Model Select", ["Latent Semantic Analysis", "TextRank", "LexRank"]) # "GenSim"
             #ratio = st.sidebar.slider("Select summary ratio", min_value=0.0, max_value=1.0, value=0.3, step=0.1)
             
             if model == "Latent Semantic Analysis":
             
-                nLineSmry = st.number_input("Please enter number of line for summary you would like to see", min_value=1)
+                nLineSmry = st.sidebar.number_input("Please enter number of line for summary you would like to see", min_value=1)
                                 
                 
                 # word weight = word-count / max(word-count)
@@ -783,19 +821,65 @@ if option == "Text Annotation":
     st.write("Text annotation in machine learning (ML) is the process of assigning labels to a digital file or document and its content. This is an NLP method where different types of sentence structures are highlighted by various criteria.")
     st.image("./images/Text Annotation.gif")
     
+    text_input = ""
 	#st.header("Enter the text")
+    options = st.sidebar.radio("Please choose one option",('Type/Enter the sentence', 'Upload File', 'Web Scrapping','Youtube URL'))
     
-    st.markdown("**Example Random Sentence:** Barack Hussein Obama II (born August 4, 1961) is an American attorney and politician who served as the 44th President of United States from January 20, 2009 to January 20, 2017. A member of the Democratic Party, he was the first African American to serve as president. He was previously a United States Senator from lllinois and a member of the lllinois State Senate.")
+    if options == "Type/Enter the sentence":
     
-    text_input = st.text_area("Type/Enter the sentence")
+        st.markdown("**Example Random Sentence:** Barack Hussein Obama II (born August 4, 1961) is an American attorney and politician who served as the 44th President of United States from January 20, 2009 to January 20, 2017. A member of the Democratic Party, he was the first African American to serve as president. He was previously a United States Senator from lllinois and a member of the lllinois State Senate.")
+        
+        text_input = st.text_area("Type/Enter the sentence")
     
+    
+    if options == "Upload File":
+    
+        uploaded_file = st.file_uploader("or Upload a file", type=["doc", "docx", "pdf", "txt"])
+        if uploaded_file is not None:
+            text_input = uploaded_file.getvalue()
+        
+    if options == 'Web Scrapping':
+            linkURL = st.text_input(label="Please enter URL of website", max_chars=100, help="From the entered URL we will fetch all the content which will be present inside <p> tag only")
+            try:
+                r=requests.get(linkURL)
+                bs= BeautifulSoup(r.text,'html.parser')
 
-    uploaded_file = st.file_uploader("or Upload a file", type=["doc", "docx", "pdf", "txt"])
-    if uploaded_file is not None:
-        text_input = uploaded_file.getvalue()
+                p=bs.find_all('p')
+            
+                for lines in p:
+                    text_input = text_input + "\n"  + str(lines.text)
+            except:
+                st.write("Please enter valid URL")
+                
+    if options == "Youtube URL":
+        st.write("YouTube Transcript Extractor")
+        URL = st.sidebar.text_input("Paste YouTube URL:","https://www.youtube.com/watch?v=Y8Tko2YC5hA")    #https://www.youtube.com/watch?v=ukzFI9rgwfU
+        
+        if "=" in URL:
+            ID = URL.split("=")[1]
+            embedurl = "https://www.youtube.com/embed/" + ID
+            if "&" in embedurl: embedurl = embedurl.split("&")[0]
+        try:
+            components.iframe(embedurl, width=500, height=250)
+        except:
+            st.error("YouTube URL Required")
+        
+        try:
+            transcript = YouTubeTranscriptApi.get_transcript(ID)
+            l = [t['text'] for t in transcript]
+            description = " ".join(l)
+        except:
+            pass
+        
+        try :
+            if len(description) > 0:
+                text_input = st.text_area("Extracted Transcript",description,height=200)
+                st.download_button(label="Download Transcript",data=description,file_name=str(ID) + ".txt",mime="text/plain")
+        except Exception as e:
+                st.error("Transcript Not available for this video")   
     
-    #nlp = spacy.load('en_core_web_sm')
-    ner = spacy.load('en_core_web_sm')
+    nlp = spacy.load("en_core_web_sm")
+    ner = spacy.load("en_core_web_sm")
     doc = ner(str(text_input))
     
     options = st.sidebar.radio("Please choose one option",('NER', 'Tokenization'))
